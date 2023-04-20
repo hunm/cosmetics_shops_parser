@@ -32,12 +32,15 @@ class Parser:
         response = requests.get(self.letual_url, headers=headers).text
         data = json.loads(response)
 
-        price = data['contents'][0]['mainContent'][2]['records'][0]['attributes']['priceWithoutCoupons']
-        product_id = data['contents'][0]['mainContent'][2]['records'][0]['attributes']['product.repositoryId'][0]
-        url = Url.get_letual_product_url(product_id)
+        try:
+            price = data['contents'][0]['mainContent'][2]['records'][0]['attributes']['priceWithoutCoupons']
+            product_id = data['contents'][0]['mainContent'][2]['records'][0]['attributes']['product.repositoryId'][0]
+            url = Url.get_letual_product_url(product_id)
 
-        self.product.add_price('Летуаль', price)
-        self.product.add_url('Летуаль', url)
+            self.product.add_price('Летуаль', price)
+            self.product.add_url('Летуаль', url)
+        except:
+            ...
 
     def parse_rivgauche(self):
         response = requests.get(self.rivgauche_url)
@@ -51,7 +54,7 @@ class Parser:
         self.product.add_url('Рив Гош', url)
 
 
-parse = Parser('VIVIENNE SABO CONCEALER IDEAL SUBLIME ')
+parse = Parser("VIVIENNE SABO GLOIRE D'AMOUR HIGHLIGHTER PALETTE")
 parse.parse_ga()
 parse.parse_letual()
 parse.parse_rivgauche()
