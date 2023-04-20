@@ -46,7 +46,7 @@ class Parser:
         response = requests.get(self.rivgauche_url)
         soup = bs(response.text, 'html.parser')
 
-        price = soup.find('div', attrs={'class': 'from-price'}).text.replace('от ', '').replace(' ₽', '')
+        price = soup.find('div', attrs={'class': 'from-price'}).text.replace('от ', '').replace(' ₽', '').replace('\xa0', '')
         end_url = soup.find('a', attrs={'class': 'media'})['href']
         url = Url.get_rivgauche_product_url(end_url)
 
@@ -54,7 +54,7 @@ class Parser:
         self.product.add_url('Рив Гош', url)
 
 
-parse = Parser("VIVIENNE SABO GLOIRE D'AMOUR HIGHLIGHTER PALETTE")
+parse = Parser("RAD i’d rather face gel")
 parse.parse_ga()
 parse.parse_letual()
 parse.parse_rivgauche()
