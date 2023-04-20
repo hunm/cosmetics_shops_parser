@@ -4,6 +4,8 @@ from url import Url
 from bs4 import BeautifulSoup as bs
 import json
 
+# TODO: Отслеживать наличие товара, добавить сохранение картинки и описания, возможно парсить отзывы
+
 
 class Parser:
     def __init__(self, query: str):
@@ -17,7 +19,7 @@ class Parser:
         response = requests.get(self.ga_url, )
         soup = bs(response.text, 'html.parser')
 
-        price = soup.find('span', attrs={'class': 'price'}).text.replace('\xa0₽', '')
+        price = soup.find('span', attrs={'class': 'price'}).text.replace('\xa0', '').replace('₽', '')
         url = soup.find('a', attrs={'class': 'product-item-link'})['href']
 
         self.product.add_price('Золотое яблоко', price)
@@ -46,7 +48,8 @@ class Parser:
         response = requests.get(self.rivgauche_url)
         soup = bs(response.text, 'html.parser')
 
-        price = soup.find('div', attrs={'class': 'from-price'}).text.replace('от ', '').replace(' ₽', '').replace('\xa0', '')
+        price = soup.find('div', attrs={'class': 'from-price'}).text.replace('от ', '').replace(' ₽', '').replace(
+            '\xa0', '')
         end_url = soup.find('a', attrs={'class': 'media'})['href']
         url = Url.get_rivgauche_product_url(end_url)
 
@@ -54,7 +57,7 @@ class Parser:
         self.product.add_url('Рив Гош', url)
 
 
-parse = Parser("RAD i’d rather face gel")
+parse = Parser("DIOR ADDICT LIPSTICK ")
 parse.parse_ga()
 parse.parse_letual()
 parse.parse_rivgauche()

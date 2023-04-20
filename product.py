@@ -1,3 +1,6 @@
+# TODO Добавить словарь с ссылками на картинки, возможно добавить ссылку на отзывы
+
+
 class Product:
     def __init__(self, name: str):
         self.name = name
