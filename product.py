@@ -4,18 +4,14 @@
 class Product:
     def __init__(self, name: str):
         self.name = name
-        self.prices = {}
         self.description = ''
-        self.urls = {}
-
-    def add_price(self, site: str, price: str):
-        self.prices[site] = price
-
-    def add_url(self, site: str, url: str):
-        self.urls[site] = url
+        self.product_in_shops = {}
 
     def add_description(self, desc: str):
         self.description = desc
 
+    def add_product_data(self, shop: str, price: str, url: str):
+        self.product_in_shops[shop] = {'Цена': price, 'Ссылка': url}
+
     def get_product(self) -> list:
-        return [self.name, self.prices, self.description, self. urls]
+        return [self.name, self.product_in_shops]

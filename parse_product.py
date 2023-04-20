@@ -22,8 +22,7 @@ class Parser:
         price = soup.find('span', attrs={'class': 'price'}).text.replace('\xa0', '').replace('₽', '')
         url = soup.find('a', attrs={'class': 'product-item-link'})['href']
 
-        self.product.add_price('Золотое яблоко', price)
-        self.product.add_url('Золотое яблоко', url)
+        self.product.add_product_data('Золотое яблоко', price, url)
 
     def parse_letual(self):
         headers = {
@@ -39,8 +38,7 @@ class Parser:
             product_id = data['contents'][0]['mainContent'][2]['records'][0]['attributes']['product.repositoryId'][0]
             url = Url.get_letual_product_url(product_id)
 
-            self.product.add_price('Летуаль', price)
-            self.product.add_url('Летуаль', url)
+            self.product.add_product_data('Летуаль', price, url)
         except:
             ...
 
@@ -53,8 +51,7 @@ class Parser:
         end_url = soup.find('a', attrs={'class': 'media'})['href']
         url = Url.get_rivgauche_product_url(end_url)
 
-        self.product.add_price('Рив Гош', price)
-        self.product.add_url('Рив Гош', url)
+        self.product.add_product_data('Рив Гош', price, url)
 
 
 parse = Parser("DIOR ADDICT LIPSTICK ")
